@@ -1,6 +1,8 @@
+
 import { words } from "../Constants";
 import Button from "./Button";
 import HeroExperience from "./HeroModels/HeroExperience";
+import AnimationCounter from "./AnimationCounter";
 
 const Hero = () => {
   return (
@@ -59,6 +61,7 @@ const Hero = () => {
             </div>
         </figure>
       </div>
+      <AnimationCounter />
     </section>
   );
 };

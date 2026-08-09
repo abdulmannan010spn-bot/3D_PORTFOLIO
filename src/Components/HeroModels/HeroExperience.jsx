@@ -5,7 +5,7 @@ import { Lego_man } from "./Lego_man";
 
 const HeroExperience = () => {
   const isTablet = useMediaQuery({ maxWidth: 1024 });
-    // eslint-disable-next-line no-unused-vars
+   
     const isMobile = useMediaQuery({ maxWidth: 768 });
 
   return (
@@ -31,7 +31,10 @@ const HeroExperience = () => {
         minPolarAngle={Math.PI / 5}
         maxPolarAngle={Math.PI / 2}
       />
-       <Lego_man position={[1.5, -2, 0]} />
+      <group scale={isMobile ? 0.7 :1}
+      position={[0,-3.5,0]} rotation={[0.-Math.PI/4 ,0]}>
+      </group>
+       <Lego_man position={isMobile ? [0, -3, 0] :[1.5, -2, 0]} />
 
     </Canvas>
   );
