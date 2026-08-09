@@ -1,4 +1,9 @@
+import { useGSAP } from "@gsap/react";
+import {}
 const Showcase = () => {
+    useGSAP(()=>{
+
+    })
   return (
     <div
       id="work"
