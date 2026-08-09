@@ -1,20 +1,44 @@
 import { useGSAP } from "@gsap/react";
-import {}
-const Showcase = () => {
-    useGSAP(()=>{
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+import { useRef } from "react";
 
-    })
+gsap.registerPlugin(ScrollTrigger);
+
+const Showcase = () => {
+  const showcaseRef = useRef(null);
+  const project1Ref = useRef(null);
+  const project2Ref = useRef(null);
+  const project3Ref = useRef(null);
+
+  useGSAP(() => {
+    gsap.from(showcaseRef.current, {
+      scrollTrigger: {
+        trigger: showcaseRef.current,
+        start: "top 30%",
+      },
+
+      opacity: 0,
+    });
+
+    gsap.from([project1Ref.current, project2Ref.current, project3Ref.current], {
+      opacity: 0,
+      delay: 0.5,
+      stagger: 0.5,
+    });
+  });
   return (
     <div
       id="work"
       className="
     app-showcase"
+      ref={showcaseRef}
     >
       <div className="w-full">
         <div className="showcaselayout">
           {/* left */}
           <div className="first-project-wrapper">
-            <div className="image-wrapper">
+            <div ref={project1Ref} className="image-wrapper">
               <img src="/images/project1.png" alt="Ryde" />
             </div>
             <div className="text-content">
@@ -31,7 +55,7 @@ const Showcase = () => {
           {/* right */}
           <div className="project-list-wrapper overflow-hidden">
             <div className="project">
-              <div className="image-wrapper bg-zinc-600">
+              <div ref={project2Ref} className="image-wrapper bg-zinc-600">
                 <img
                   src="/images/project2.png"
                   alt="Library management system"
@@ -41,7 +65,7 @@ const Showcase = () => {
             </div>
 
             <div className="project">
-              <div className="image-wrapper bg-zinc-300">
+              <div ref={project3Ref} className="image-wrapper bg-zinc-300">
                 <img src="/images/project3.png" alt="YC" />
               </div>
               <h2>YC Directory - A Startup Showcase App</h2>
