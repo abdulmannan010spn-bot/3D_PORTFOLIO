@@ -23,8 +23,8 @@ const Showcase = () => {
 
     gsap.from([project1Ref.current, project2Ref.current, project3Ref.current], {
       opacity: 0,
-      delay: 0.5,
-      stagger: 0.5,
+      delay: 0.3,
+      stagger: 0.6,
     });
   });
   return (
