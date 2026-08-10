@@ -61,7 +61,7 @@ const Showcase = () => {
                   alt="Library management system"
                 />
               </div>
-              <h2>Library management sya\stem</h2>
+              <h2>Library management system</h2>
             </div>
 
             <div className="project">

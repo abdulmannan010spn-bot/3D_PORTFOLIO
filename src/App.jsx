@@ -1,3 +1,4 @@
+import Experience from "./Components/Experience"
 import FeatureCard from "./Components/FeatureCard"
 import Hero from "./Components/Hero"
 import LogoSection from "./Components/LogoSection"
@@ -12,6 +13,7 @@ const App = () => {
       <Showcase />
       <LogoSection />
       <FeatureCard />
+      <Experience />
     </main>
   )
 }
