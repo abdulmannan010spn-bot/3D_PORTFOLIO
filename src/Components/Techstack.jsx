@@ -1,5 +1,5 @@
 import { techStackIcons } from "../Constants";
-import TechIcon from "./Models/TechIcon";
+// import TechIcon from "./Models/TechIcon";
 import TitleHeader from "./TitleHeader";
 
 const TechStack = () => {
@@ -11,15 +11,15 @@ const TechStack = () => {
           sub="The Skills I Bring to the Table"
         />
 
-        <div className="tech-grid">
+        <div className="tech-grid ">
           {techStackIcons.map((icon) => (
             <div
               key={icon.name}
-              className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg"
+              className="card-border tech-card overflow-hidden group xl:rounded-2xl rounded-lg"
             >
               <div className="tech-card-content">
                 <div className="tech-icon-wrapper">
-                  <TechIcon model={icon} />
+                  {/* <TechIcon model={icon} /> */}
                 </div>
                 <div className="padding-x w-full">
                   <p>{icon.name}</p>

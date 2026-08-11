@@ -1,7 +1,7 @@
 
 import { words } from "../Constants";
 import Button from "./Button";
-import HeroExperience from "./HeroModels/HeroExperience";
+// import HeroExperience from "./HeroModels/HeroExperience";
 import AnimationCounter from "./AnimationCounter";
 
 const Hero = () => {
@@ -57,7 +57,7 @@ const Hero = () => {
 
         <figure>
             <div className="hero-3d-layout">
-                <HeroExperience />
+                {/* <HeroExperience /> */}
             </div>
         </figure>
       </div>
