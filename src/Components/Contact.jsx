@@ -53,7 +53,9 @@ const Contact = () => {
             </div>
           </div>
           <div className="xl:col-span-7 min-h-96">
-            <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden"></div>
+            <div className="w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
+              <img src="/images/mail.gif" alt="contact us" className="h-[80%] w-[80%] object-contain lg:ml-25 xl:ml-25" />
+            </div>
           </div>
         </div>
       </div>

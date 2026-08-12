@@ -1,4 +1,3 @@
-
 import { words } from "../Constants";
 import Button from "./Button";
 // import HeroExperience from "./HeroModels/HeroExperience";
@@ -16,12 +15,11 @@ const Hero = () => {
       </div>
 
       <div className="hero-layout">
- 
         <header className="flex flex-col justify-between md:w-full w-screen md:px-20 px-5">
           <div className=" flex flex-col gap-7">
             <div className="hero-text">
               <h1>
-                Shaping
+                Turning
                 <span className="slide">
                   <span className="wrapper">
                     {words.map((word) => (
@@ -40,26 +38,26 @@ const Hero = () => {
                   </span>
                 </span>
               </h1>
-              <h1>into Real Projects</h1>
-              <h1>that Deliver Results</h1>
+              <h1>into Interactive</h1>
+              <h1>Digital Experiences</h1>
             </div>
 
             <p className="text-white md:text-xl pointer-events-none z-10 relative">
-              Hi, I’m Abdul Mannan, a developer based in India with a passion
-              for code.
+              Hi, I’m Abdul Mannan, a creative developer passionate about <br />
+              building interactive, modern, and immersive web experiences.
             </p>
-            <Button
-              className="md:w-80 md:h-16 w-60 h-12"
-              text="View My Work"
-            />
+            <Button className="md:w-80 md:h-16 w-60 h-12" text="View My Work" />
           </div>
         </header>
-
-        <figure>
-            <div className="hero-3d-layout">
-                {/* <HeroExperience /> */}
-            </div>
-        </figure>
+        <div>
+          <div className="hero-3d-layout flex-center">
+            <img
+              src="/images/Profile.png"
+              alt="Abdul Mannan"
+              className="w-full xl:h-[70%] lg:h-[70%] md:h-[42%] h-[43%] md:mt-10 mt-35 object-contain rounded-full"
+            />
+          </div>
+        </div>
       </div>
       <AnimationCounter />
     </section>
