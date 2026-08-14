@@ -7,7 +7,7 @@ const Testimonial = () => {
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader title="Who I am in Team OSS ?" sub="Highlights" />
 
-        <div className="w-full h-dvh">
+        <div className="w-full h-dvh py-5">
           <Lanyard
             position={[0, 0, 20]}
             gravity={[0, -40, 0]}

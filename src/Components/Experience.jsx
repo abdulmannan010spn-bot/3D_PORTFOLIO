@@ -5,12 +5,63 @@ import TitleHeader from "./TitleHeader";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 const Experience = () => {
-  useGSAP(()=>{
-    
-  })
+  useGSAP(() => {
+    gsap.utils.toArray('.timeline-card').forEach((card)=>{
+
+        
+          gsap.from(card,{
+
+      scrollTrigger:{
+        trigger:card,
+        start:"top 80%",
+        end:"top bottom",
+      },
+
+      opacity:0,
+      xPercent:-100,
+      transformOrigin:"left left",
+      duration:1,
+      ease:'power2.inOut'
+    })
+    })
+     
+    gsap.to('.timeline',{
+      transformOrigin:"bottom bottom",
+      ease:'power1.inOut',
+      scrollTrigger:{
+        trigger:'.timeline',
+        start:'top center',
+        end:'70% center',
+        onUpdate:(self)=>{
+          gsap.to('.timeline',{
+            scaleY:1-self.progress
+          })
+        }
+      }
+    })
+
+        gsap.utils.toArray('.expText').forEach((text)=>{
+
+        
+          gsap.from(text,{
+
+      scrollTrigger:{
+        trigger:text,
+        start:"top 60%",
+        end:"top bottom",
+      },
+
+      opacity:0,
+      xPercent:0,
+      duration:1,
+      ease:'power2.inOut'
+    })
+    })
+
+  },[]);
   return (
     <section
       id="experience"
@@ -36,10 +87,10 @@ const Experience = () => {
                   <div className="flex items-start">
                     <div className="timeline-wrapper">
                       <div className="timeline" />
-                      <div className="gradient-line w-1 h-full" />
+                      <div className="gradient-line w-1 h-full -z-999" />
                     </div>
                     <div className="expText flex xl:gap-20 md:gap-10 gap-5">
-                      <div className="timeline-logo">
+                      <div className="timeline-logo ">
                         <img src={card.logoPath} alt="" />
                       </div>
                       <div>
@@ -53,7 +104,7 @@ const Experience = () => {
                             </li>
                           ))}
                         </ul>
-                      </div> 
+                      </div>
                     </div>
                   </div>
                 </div>

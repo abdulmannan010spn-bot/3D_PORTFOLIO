@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <header className="navbar bg-black">
         <div className="inner">
-             <a className="logo" href="#hero">
+             <a className="logo font-[Playwrite_VN] text-lg" href="#hero">
                 Abdul Mannan
              </a>
              <nav className="desktop">

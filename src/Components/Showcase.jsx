@@ -25,8 +25,7 @@ const Showcase = () => {
       [project1Ref.current, project2Ref.current, project3Ref.current],
       {
         opacity: 0,
-        y: 50,
-        delay: 0.3,
+        y: -60,
         stagger: 0.6,
         duration: 1,
         ease: "power2.out",
@@ -41,8 +40,8 @@ const Showcase = () => {
 
      
           <div className="first-project-wrapper">
-            <div ref={project1Ref} className="image-wrapper">
-              <img className="h-full w-full object-cover"
+            <div ref={project1Ref} className="image-wrapper bg-[#D5DFF8] rounded-xl">
+              <img className="h-full w-full object-contain"
                 src="/images/pokemonpro.jpeg"
                 alt="Pokémon Explorer Project"
               />
@@ -65,13 +64,13 @@ const Showcase = () => {
           <div className="project-list-wrapper overflow-hidden">
 
           
-            <div className="project">
+            <div className="project2">
               <div
                 ref={project2Ref}
-                className="image-wrapper bg-[#050609]"
+                className="image-wrapper bg-black border-2 border-[#18181B]"
               >
                 <img className="h-full w-full object-cover"
-                  src="/images/so.png"
+                  src="/images/sona.png"
                   alt="Sonata Watch Website"
                 />
               </div>
@@ -83,13 +82,13 @@ const Showcase = () => {
             </div>
 
           
-            <div className="project">
+            <div className="project3">
               <div
                 ref={project3Ref}
-                className="image-wrapper bg-[#0B0C0F]"
+                className="image-wrapper bg-black border-2 border-[#18181B]"
               >
                 <img className="h-full w-full object-cover"
-                  src="/images/ap.png"
+                  src="/images/app.png"
                   alt="3D Developer Portfolio"
                 />
               </div>

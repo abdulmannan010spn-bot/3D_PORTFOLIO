@@ -1,7 +1,6 @@
 import { logoIconsList } from "../Constants";
 
 const LogoSection = () => {
-  // Repeat the icon list N times to create a seamless marquee loop
   const repeatCount = 6;
 
   return (

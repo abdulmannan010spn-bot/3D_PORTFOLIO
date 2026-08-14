@@ -20,11 +20,13 @@ const navLinks = [
 const words = [
   {
     text: "Ideas",
-    imgPath: "https://api.iconify.design/solar/lightbulb-bolt-bold.svg?color=%23000000",
+    imgPath:
+      "https://api.iconify.design/solar/lightbulb-bolt-bold.svg?color=%23000000",
   },
   {
     text: "Designs",
-    imgPath: "https://api.iconify.design/solar/pen-new-square-bold.svg?color=%23000000",
+    imgPath:
+      "https://api.iconify.design/solar/pen-new-square-bold.svg?color=%23000000",
   },
   {
     text: "Code",
@@ -32,15 +34,18 @@ const words = [
   },
   {
     text: "Interfaces",
-    imgPath: "https://api.iconify.design/solar/window-frame-bold.svg?color=%23000000",
+    imgPath:
+      "https://api.iconify.design/solar/window-frame-bold.svg?color=%23000000",
   },
   {
     text: "Ideas",
-    imgPath: "https://api.iconify.design/solar/lightbulb-bolt-bold.svg?color=%23000000",
+    imgPath:
+      "https://api.iconify.design/solar/lightbulb-bolt-bold.svg?color=%23000000",
   },
   {
     text: "Designs",
-    imgPath: "https://api.iconify.design/solar/pen-new-square-bold.svg?color=%23000000",
+    imgPath:
+      "https://api.iconify.design/solar/pen-new-square-bold.svg?color=%23000000",
   },
   {
     text: "Code",
@@ -48,7 +53,8 @@ const words = [
   },
   {
     text: "Interfaces",
-    imgPath: "https://api.iconify.design/solar/window-frame-bold.svg?color=%23000000",
+    imgPath:
+      "https://api.iconify.design/solar/window-frame-bold.svg?color=%23000000",
   },
 ];
 
@@ -58,7 +64,6 @@ const counterItems = [
   { value: 3, suffix: "D", label: "Web Experiences" },
   { value: 100, suffix: "%", label: "Passion for Development" },
 ];
-
 
 const logoIconsList = [
   {
@@ -94,7 +99,6 @@ const logoIconsList = [
       "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
   },
 ];
-
 
 const abilities = [
   {
@@ -140,33 +144,28 @@ const techStackImgs = [
 const techStackIcons = [
   {
     name: "React Developer",
-    modelPath: "/models/react_logo-transformed.glb",
-    scale: 1,
-    rotation: [0, 0, 0],
+    imagePath:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
   },
   {
     name: "Java Developer",
-    modelPath: "/models/java-transformed.glb",
-    scale: 0.8,
-    rotation: [0, 0, 0],
+    imagePath:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
   },
   {
     name: "JavaScript Developer",
-    modelPath: "/models/javascript-transformed.glb",
-    scale: 1,
-    rotation: [0, 0, 0],
+    imagePath:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
   },
   {
     name: "3D Web Developer",
-    modelPath: "/models/three.js-transformed.glb",
-    scale: 0.05,
-    rotation: [0, 0, 0],
+    imagePath:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg",
   },
   {
     name: "Creative Developer",
-    modelPath: "/models/figma-transformed.glb",
-    scale: 0.05,
-    rotation: [0, 0, 0],
+    imagePath:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
   },
 ];
 
@@ -175,7 +174,7 @@ const expCards = [
     review:
       "Abdul has been actively involved in building creative digital experiences and contributing to technical projects through the Open Source Software and Research & Development Centre.",
     imgPath: "/images/exp1.png",
-    logoPath: "/images/logo1.png",
+    logoPath: "/images/oss.png",
     title: "Open Source & R&D Centre",
     date: "2025 - Present",
     responsibilities: [
@@ -188,7 +187,7 @@ const expCards = [
     review:
       "Abdul combines frontend development with strong visual design skills, creating interfaces that are both functional and visually engaging.",
     imgPath: "/images/exp2.png",
-    logoPath: "/images/logo2.png",
+    logoPath: "/images/react.png",
     title: "Frontend & Creative Developer",
     date: "2025 - Present",
     responsibilities: [
@@ -199,15 +198,17 @@ const expCards = [
   },
   {
     review:
-      "Abdul enjoys experimenting with 3D web development and modern frontend technologies to create immersive user experiences.",
+      "Abdul is passionate about combining GSAP and Three.js to build immersive, interactive, and visually engaging web experiences.",
+
     imgPath: "/images/exp3.png",
-    logoPath: "/images/logo3.png",
+    logoPath: "/images/gsap.png",
     title: "3D Web Developer",
     date: "2026 - Present",
+
     responsibilities: [
-      "Developing interactive 3D experiences using Three.js and React Three Fiber.",
-      "Working with GLB/GLTF models, lighting, materials and camera controls.",
-      "Experimenting with GSAP animations and modern web interactions for portfolio projects.",
+      "Building interactive 3D web applications using Three.js and React Three Fiber.",
+      "Creating smooth animations and scroll-based interactions with GSAP and ScrollTrigger.",
+      "Working with GLB/GLTF models, lighting, materials, cameras, and optimized 3D rendering techniques.",
     ],
   },
 ];
