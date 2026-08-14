@@ -1,7 +1,16 @@
+import { useGSAP } from "@gsap/react";
 import { expCards } from "../Constants";
 import Glowcard from "./Glowcard";
 import TitleHeader from "./TitleHeader";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger)
+
 const Experience = () => {
+  useGSAP(()=>{
+    
+  })
   return (
     <section
       id="experience"

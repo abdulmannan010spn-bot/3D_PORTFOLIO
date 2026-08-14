@@ -9,12 +9,11 @@ const Testimonial = () => {
 
         <div className="w-full h-dvh">
           <Lanyard
-          cardFrontTextureUrl="/images/front.png"
-          cardBackTextureUrl="/images/back.png"
-
-            cardGlbUrl="/models/card.glb"
-            strapColor="#1a1a1a"
-            position={[0, 4, 0]}
+            position={[0, 0, 20]}
+            gravity={[0, -40, 0]}
+            frontImage="/images/front.png"
+            backImage="/images/back.png"
+            imageFit="cover"
           />
         </div>
       </div>

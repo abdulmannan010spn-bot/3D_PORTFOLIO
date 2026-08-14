@@ -1,347 +1,285 @@
-import { useRef, useState, useEffect, useMemo } from "react";
-import { Canvas, useFrame, extend } from "@react-three/fiber";
-import { useGLTF, useTexture, Environment, Lightformer } from "@react-three/drei";
-import {
-  BallCollider,
-  CuboidCollider,
-  Physics,
-  RigidBody,
-  useRopeJoint,
-  useSphericalJoint,
-} from "@react-three/rapier";
-import { MeshLineGeometry, MeshLineMaterial } from "meshline";
-import * as THREE from "three";
+
+
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Canvas, extend, useFrame } from '@react-three/fiber';
+import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
+import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
+import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
+
+// replace with your own imports, see the usage snippet for details
+
+
+
+import * as THREE from 'three';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
-/**
- * Lanyard
- *
- * A physics-driven "ID card on a lanyard" effect:
- * - A card (rigid body) hangs from a fixed anchor via a chain of joints.
- * - The strap is rendered as a bending band using MeshLine, following the joints.
- * - The card can be grabbed and dragged; releasing it lets physics swing it back.
- *
- * Props:
- *  - cardGlbUrl: path to your card .glb (defaults to "/models/card.glb")
- *  - cardTextureUrl: optional texture applied to the whole card body (legacy/base)
- *  - cardFrontTextureUrl: image (from /public) shown on the card's front face
- *  - cardBackTextureUrl: image (from /public) shown on the card's back face
- *  - cardFaceWidth / cardFaceHeight: size of the front/back image planes (model-space units)
- *  - cardFaceOffset: how far the image planes sit off the card surface (avoids z-fighting)
- *  - cardBackMirrored: flip the back image horizontally if it looks mirrored (default false)
- *  - cardScale: uniform scale of the card model (default 2.25)
- *  - cardWidth / cardHeight: collider size, controls the card's "shape"/aspect ratio
- *  - cardColor: base color when no texture is supplied
- *  - cardRoughness / cardMetalness / cardClearcoat: card material finish
- *  - strapColor: hex color of the strap
- *  - strapWidth: thickness of the strap line (default 0.15)
- *  - strapOpacity: 0–1 transparency of the strap
- *  - position: [x, y, z] anchor position offset
- */
-export default function Lanyard({
-  cardGlbUrl = "/models/card.glb",
-  cardTextureUrl,
-  cardFrontTextureUrl,
-  cardBackTextureUrl,
-  cardFaceWidth = 1,
-  cardFaceHeight = 1.4,
-  cardFaceOffset = 0.06,
-  cardBackMirrored = false,
-  cardScale = 2.25,
-  cardWidth = 0.8,
-  cardHeight = 1.1,
-  cardColor = "#e5e5e5",
-  cardRoughness = 0.3,
-  cardMetalness = 0.5,
-  cardClearcoat = 1,
-  strapColor = "#1a1a1a",
-  strapWidth = 0.15,
-  strapOpacity = 1,
-  position = [0, 0, 0],
-}) {
-  return (
-    <div style={{ width: "100%", height: "100%", position: "relative" }}>
-      <Canvas
-        camera={{ position: [0, 0, 13], fov: 25 }}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} />
+// 1x1 transparent pixel — lets useTexture be called unconditionally when a
+// front/back image isn't supplied.
+const BLANK_PIXEL =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
-        <Physics gravity={[0, -40, 0]} timeStep={1 / 60}>
+// The card model's front face is UV-mapped to the LEFT half of the texture
+// atlas and the back face to the RIGHT half (measured from card.glb). Each
+// custom image is composited into its own half so the two faces render
+// independently, aspect-preserving (no stretching).
+const FRONT_UV_RECT = { x: 0, y: 0, w: 0.5, h: 0.755 };
+const BACK_UV_RECT = { x: 0.5, y: 0, w: 0.5, h: 0.757 };
+
+export default function Lanyard({
+  position = [0, 0, 30],
+  gravity = [0, -40, 0],
+  fov = 20,
+  transparent = true,
+  frontImage = null,
+  backImage = null,
+  imageFit = 'cover',
+  lanyardImage = null,
+  lanyardWidth = 1
+}) {
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
+      <Canvas
+        camera={{ position: position, fov: fov }}
+        dpr={[1, isMobile ? 1.5 : 2]}
+        gl={{ alpha: transparent }}
+        onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
+      >
+        <ambientLight intensity={Math.PI} />
+        <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
           <Band
-            cardGlbUrl={cardGlbUrl}
-            cardTextureUrl={cardTextureUrl}
-            cardFrontTextureUrl={cardFrontTextureUrl}
-            cardBackTextureUrl={cardBackTextureUrl}
-            cardFaceWidth={cardFaceWidth}
-            cardFaceHeight={cardFaceHeight}
-            cardFaceOffset={cardFaceOffset}
-            cardBackMirrored={cardBackMirrored}
-            cardScale={cardScale}
-            cardWidth={cardWidth}
-            cardHeight={cardHeight}
-            cardColor={cardColor}
-            cardRoughness={cardRoughness}
-            cardMetalness={cardMetalness}
-            cardClearcoat={cardClearcoat}
-            strapColor={strapColor}
-            strapWidth={strapWidth}
-            strapOpacity={strapOpacity}
-            anchorPosition={position}
+            isMobile={isMobile}
+            frontImage={frontImage}
+            backImage={backImage}
+            imageFit={imageFit}
+            lanyardImage={lanyardImage}
+            lanyardWidth={lanyardWidth}
           />
         </Physics>
-
-        <Environment resolution={256}>
-          <group rotation={[-Math.PI / 3, 0, 1]}>
-            <Lightformer
-              form="circle"
-              intensity={2}
-              position={[0, 5, -9]}
-              scale={10}
-            />
-            <Lightformer
-              form="circle"
-              intensity={2}
-              position={[-5, 1, -1]}
-              scale={4}
-            />
-            <Lightformer
-              form="circle"
-              intensity={2}
-              position={[5, 1, -1]}
-              scale={4}
-            />
-          </group>
+        <Environment blur={0.75}>
+          <Lightformer
+            intensity={2}
+            color="white"
+            position={[0, -1, 5]}
+            rotation={[0, 0, Math.PI / 3]}
+            scale={[100, 0.1, 1]}
+          />
+          <Lightformer
+            intensity={3}
+            color="white"
+            position={[-1, -1, 1]}
+            rotation={[0, 0, Math.PI / 3]}
+            scale={[100, 0.1, 1]}
+          />
+          <Lightformer
+            intensity={3}
+            color="white"
+            position={[1, 1, 1]}
+            rotation={[0, 0, Math.PI / 3]}
+            scale={[100, 0.1, 1]}
+          />
+          <Lightformer
+            intensity={10}
+            color="white"
+            position={[-10, 0, 14]}
+            rotation={[0, Math.PI / 2, Math.PI / 3]}
+            scale={[100, 10, 1]}
+          />
         </Environment>
       </Canvas>
     </div>
   );
 }
-
 function Band({
-  cardGlbUrl,
-  cardTextureUrl,
-  cardFrontTextureUrl,
-  cardBackTextureUrl,
-  cardFaceWidth,
-  cardFaceHeight,
-  cardFaceOffset,
-  cardBackMirrored,
-  cardScale,
-  cardWidth,
-  cardHeight,
-  cardColor,
-  cardRoughness,
-  cardMetalness,
-  cardClearcoat,
-  strapColor,
-  strapWidth,
-  strapOpacity,
-  anchorPosition,
+  maxSpeed = 50,
+  minSpeed = 0,
+  isMobile = false,
+  frontImage = null,
+  backImage = null,
+  imageFit = 'cover',
+  lanyardImage = null,
+  lanyardWidth = 1
 }) {
-  // Refs for each segment of the strap chain + the card body
-  const band = useRef();
-  const fixed = useRef();
-  const j1 = useRef();
-  const j2 = useRef();
-  const j3 = useRef();
-  const card = useRef();
+  const band = useRef(),
+    fixed = useRef(),
+    j1 = useRef(),
+    j2 = useRef(),
+    j3 = useRef(),
+    card = useRef();
+  const vec = new THREE.Vector3(),
+    ang = new THREE.Vector3(),
+    rot = new THREE.Vector3(),
+    dir = new THREE.Vector3();
+  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
+  const { nodes, materials } = useGLTF("/models/card.glb");
+  const texture = useTexture(lanyardImage || "/images/lanyard.png");
+  // useTexture must be called unconditionally; use a blank pixel when an image
+  // isn't supplied for a given face, then skip compositing it below.
+  const frontTex = useTexture(frontImage || BLANK_PIXEL);
+  const backTex = useTexture(backImage || BLANK_PIXEL);
 
-  const vec = new THREE.Vector3();
-  const dir = new THREE.Vector3();
+  // Composite the front/back images into the card's texture atlas (front = left
+  // half, back = right half). Each image is drawn aspect-preserving (no stretch).
+  const cardMap = useMemo(() => {
+    const baseMap = materials.base.map;
+    if (!frontImage && !backImage) return baseMap;
 
-  const [dragged, setDragged] = useState(false);
-  const [hovered, setHovered] = useState(false);
+    const baseImg = baseMap.image;
+    const W = baseImg.width;
+    const H = baseImg.height;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return baseMap;
+    // Keep the original baked atlas for the card edges and any untouched face.
+    ctx.drawImage(baseImg, 0, 0, W, H);
 
-  // Chain the joints together — this creates the "rope" feel
+    const drawFitted = (img, rect) => {
+      const rx = rect.x * W;
+      const ry = rect.y * H;
+      const rw = rect.w * W;
+      const rh = rect.h * H;
+      const pick = imageFit === 'contain' ? Math.min : Math.max;
+      const scale = pick(rw / img.width, rh / img.height);
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+      const dx = rx + (rw - dw) / 2;
+      const dy = ry + (rh - dh) / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(rx, ry, rw, rh);
+      ctx.clip();
+      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.restore();
+    };
+
+    if (frontImage && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT);
+    if (backImage && backTex.image) drawFitted(backTex.image, BACK_UV_RECT);
+
+    const composite = new THREE.CanvasTexture(canvas);
+    composite.colorSpace = THREE.SRGBColorSpace;
+    composite.flipY = baseMap.flipY;
+    composite.anisotropy = 16;
+    composite.needsUpdate = true;
+    return composite;
+  }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map]);
+  const [curve] = useState(
+    () =>
+      new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])
+  );
+  const [dragged, drag] = useState(false);
+  const [hovered, hover] = useState(false);
+
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
-  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.2, 0]]);
-
-  const { nodes, materials } = useGLTF(cardGlbUrl);
-  // useTexture must always be called (Rules of Hooks) — fall back to a 1x1
-  // transparent placeholder when no texture URL is provided.
-  const FALLBACK_TEXTURE =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
-  const cardTexture = useTexture(cardTextureUrl || FALLBACK_TEXTURE);
-  const cardFrontTexture = useTexture(cardFrontTextureUrl || FALLBACK_TEXTURE);
-  const cardBackTexture = useTexture(cardBackTextureUrl || FALLBACK_TEXTURE);
-
-  const curve = useMemo(
-    () =>
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-        new THREE.Vector3(),
-      ]),
-    []
-  );
+  useSphericalJoint(j3, card, [
+    [0, 0, 0],
+    [0, 1.5, 0]
+  ]);
 
   useEffect(() => {
-    document.body.style.cursor = hovered
-      ? dragged
-        ? "grabbing"
-        : "grab"
-      : "auto";
+    if (hovered) {
+      document.body.style.cursor = dragged ? 'grabbing' : 'grab';
+      return () => void (document.body.style.cursor = 'auto');
+    }
   }, [hovered, dragged]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (dragged) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
       vec.add(dir.multiplyScalar(state.camera.position.length()));
-      card.current?.setNextKinematicTranslation({
-        x: vec.x,
-        y: vec.y,
-        z: vec.z,
-      });
+      [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
+      card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z });
     }
-
-    if (fixed.current && j1.current && j2.current && j3.current) {
-      // Keep the curve points synced with the physics joints
+    if (fixed.current) {
+      [j1, j2].forEach(ref => {
+        if (!ref.current.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
+        const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
+        ref.current.lerped.lerp(
+          ref.current.translation(),
+          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+        );
+      });
       curve.points[0].copy(j3.current.translation());
-      curve.points[1].copy(j2.current.translation());
-      curve.points[2].copy(j1.current.translation());
+      curve.points[1].copy(j2.current.lerped);
+      curve.points[2].copy(j1.current.lerped);
       curve.points[3].copy(fixed.current.translation());
-      band.current.geometry.setPoints(curve.getPoints(32));
+      band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+      ang.copy(card.current.angvel());
+      rot.copy(card.current.rotation());
+      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
     }
   });
 
+  // eslint-disable-next-line react-hooks/immutability
+  curve.curveType = 'chordal';
+  // eslint-disable-next-line react-hooks/immutability
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+
   return (
-    <group position={anchorPosition}>
-      {/* Fixed anchor point (invisible, immovable) */}
-      <RigidBody ref={fixed} type="fixed" />
-
-      {/* Chain of small rope-joint segments */}
-      <RigidBody
-        position={[0.5, 0, 0]}
-        ref={j1}
-        angularDamping={2}
-        linearDamping={2}
-      >
-        <BallCollider args={[0.1]} />
-      </RigidBody>
-      <RigidBody
-        position={[1, 0, 0]}
-        ref={j2}
-        angularDamping={2}
-        linearDamping={2}
-      >
-        <BallCollider args={[0.1]} />
-      </RigidBody>
-      <RigidBody
-        position={[1.5, 0, 0]}
-        ref={j3}
-        angularDamping={2}
-        linearDamping={2}
-      >
-        <BallCollider args={[0.1]} />
-      </RigidBody>
-
-      {/* The card itself */}
-      <RigidBody
-        position={[2, 0, 0]}
-        ref={card}
-        angularDamping={2}
-        linearDamping={2}
-        type={dragged ? "kinematicPosition" : "dynamic"}
-      >
-        <CuboidCollider args={[cardWidth, cardHeight, 0.01]} />
-        <group
-          scale={cardScale}
-          position={[0, -1.2, -0.05]}
-          onPointerOver={() => setHovered(true)}
-          onPointerOut={() => setHovered(false)}
-          onPointerDown={(e) => {
-            e.target.setPointerCapture(e.pointerId);
-            setDragged(true);
-          }}
-          onPointerUp={(e) => {
-            e.target.releasePointerCapture(e.pointerId);
-            setDragged(false);
-          }}
-        >
-          {nodes?.card && (
-            <mesh geometry={nodes.card.geometry} castShadow>
-              {cardTextureUrl ? (
-                <meshPhysicalMaterial
-                  map={cardTexture}
-                  map-anisotropy={16}
-                  clearcoat={cardClearcoat}
-                  clearcoatRoughness={0.15}
-                  roughness={cardRoughness}
-                  metalness={cardMetalness}
-                  color="white"
-                />
-              ) : (
-                <meshPhysicalMaterial
-                  clearcoat={cardClearcoat}
-                  clearcoatRoughness={0.15}
-                  roughness={cardRoughness}
-                  metalness={cardMetalness}
-                  color={cardColor}
-                />
-              )}
-            </mesh>
-          )}
-          {nodes?.clip && (
-            <mesh geometry={nodes.clip.geometry} material={materials?.metal} />
-          )}
-          {nodes?.clamp && (
-            <mesh
-              geometry={nodes.clamp.geometry}
-              material={materials?.metal}
-            />
-          )}
-
-          {/* Front face image */}
-          {cardFrontTextureUrl && (
-            <mesh position={[0, 0, cardFaceOffset]}>
-              <planeGeometry args={[cardFaceWidth, cardFaceHeight]} />
-              <meshBasicMaterial
-                map={cardFrontTexture}
+    <>
+      <group position={[0, 4, 0]}>
+        <RigidBody ref={fixed} {...segmentProps} type="fixed" />
+        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+          <BallCollider args={[0.1]} />
+        </RigidBody>
+        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+          <BallCollider args={[0.1]} />
+        </RigidBody>
+        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+          <BallCollider args={[0.1]} />
+        </RigidBody>
+        <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+          <CuboidCollider args={[0.8, 1.125, 0.01]} />
+          <group
+            scale={2.25}
+            position={[0, -1.2, -0.05]}
+            onPointerOver={() => hover(true)}
+            onPointerOut={() => hover(false)}
+            onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
+            onPointerDown={e => (
+              e.target.setPointerCapture(e.pointerId),
+              drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())))
+            )}
+          >
+            <mesh geometry={nodes.card.geometry}>
+              <meshPhysicalMaterial
+                map={cardMap}
                 map-anisotropy={16}
-                toneMapped={false}
+                clearcoat={isMobile ? 0 : 1}
+                clearcoatRoughness={0.15}
+                roughness={0.9}
+                metalness={0.8}
               />
             </mesh>
-          )}
-
-          {/* Back face image (rotated 180° to face the opposite direction) */}
-          {cardBackTextureUrl && (
-            <mesh
-              position={[0, 0, -cardFaceOffset]}
-              rotation={[0, Math.PI, 0]}
-              scale={[cardBackMirrored ? -1 : 1, 1, 1]}
-            >
-              <planeGeometry args={[cardFaceWidth, cardFaceHeight]} />
-              <meshBasicMaterial
-                map={cardBackTexture}
-                map-anisotropy={16}
-                toneMapped={false}
-              />
-            </mesh>
-          )}
-        </group>
-      </RigidBody>
-
-      {/* The strap/band rendered via meshline, following the joint chain */}
+            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
+            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+          </group>
+        </RigidBody>
+      </group>
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial
-          color={strapColor}
-          resolution={[1000, 1000]}
-          lineWidth={strapWidth}
-          transparent={strapOpacity < 1}
-          opacity={strapOpacity}
+          color="white"
           depthTest={false}
+          resolution={isMobile ? [1000, 2000] : [1000, 1000]}
+          useMap
+          map={texture}
+          repeat={[-4, 1]}
+          lineWidth={lanyardWidth}
         />
       </mesh>
-    </group>
+    </>
   );
 }
-
-useGLTF.preload("/models/card.glb");

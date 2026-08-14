@@ -17,63 +17,93 @@ const Showcase = () => {
         trigger: showcaseRef.current,
         start: "top 30%",
       },
-
       opacity: 0,
+      duration: 1,
     });
 
-    gsap.from([project1Ref.current, project2Ref.current, project3Ref.current], {
-      opacity: 0,
-      delay: 0.3,
-      stagger: 0.6,
-    });
-  });
+    gsap.from(
+      [project1Ref.current, project2Ref.current, project3Ref.current],
+      {
+        opacity: 0,
+        y: 50,
+        delay: 0.3,
+        stagger: 0.6,
+        duration: 1,
+        ease: "power2.out",
+      }
+    );
+  }, []);
+
   return (
-    <div
-      id="work"
-      className="
-    app-showcase"
-      ref={showcaseRef}
-    >
+    <div id="work" className="app-showcase" ref={showcaseRef}>
       <div className="w-full">
         <div className="showcaselayout">
-          {/* left */}
+
+     
           <div className="first-project-wrapper">
             <div ref={project1Ref} className="image-wrapper">
-              <img src="/images/project1.png" alt="Ryde" />
+              <img className="h-full w-full object-cover"
+                src="/images/pokemonpro.jpeg"
+                alt="Pokémon Explorer Project"
+              />
             </div>
+
             <div className="text-content">
               <h2>
-                On-Demand Rides Made Simple with a Powerful, User-Friendly App
-                called Ryde
+                Explore the World of Pokémon with a Fast and Interactive Web App
               </h2>
+
               <p className="text-white-50 md:text-xl">
-                An app built with React Native, Expo, & TailwindCSS for a fast,
-                user-friendly experience.
+                A responsive Pokémon explorer built with React, Axios, and
+                PokeAPI, featuring dynamic data fetching, reusable components,
+                and an interactive user experience.
               </p>
             </div>
           </div>
-          {/* right */}
+
+        
           <div className="project-list-wrapper overflow-hidden">
+
+          
             <div className="project">
-              <div ref={project2Ref} className="image-wrapper bg-zinc-600">
-                <img
-                  src="/images/project2.png"
-                  alt="Library management system"
+              <div
+                ref={project2Ref}
+                className="image-wrapper bg-[#050609]"
+              >
+                <img className="h-full w-full object-cover"
+                  src="/images/so.png"
+                  alt="Sonata Watch Website"
                 />
               </div>
-              <h2>Library management system</h2>
+
+              <h2>
+                Sonata — A Premium Watch Experience Crafted for the Modern
+                Lifestyle
+              </h2>
             </div>
 
+          
             <div className="project">
-              <div ref={project3Ref} className="image-wrapper bg-zinc-300">
-                <img src="/images/project3.png" alt="YC" />
+              <div
+                ref={project3Ref}
+                className="image-wrapper bg-[#0B0C0F]"
+              >
+                <img className="h-full w-full object-cover"
+                  src="/images/ap.png"
+                  alt="3D Developer Portfolio"
+                />
               </div>
-              <h2>YC Directory - A Startup Showcase App</h2>
+
+              <h2>
+                Apple — An Immersive Product Experience Built with React & Three.js
+              </h2>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default Showcase;
