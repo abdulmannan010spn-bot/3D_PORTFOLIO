@@ -1,9 +1,9 @@
 import { words } from "../Constants";
 import Button from "./Button";
-// import HeroExperience from "./HeroModels/HeroExperience";
 import AnimationCounter from "./AnimationCounter";
 
 const Hero = () => {
+
   return (
     <section
       id="hero"

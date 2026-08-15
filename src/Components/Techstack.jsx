@@ -22,12 +22,12 @@ const TechStack = () => {
                     src={imagePath}
                     alt={`${name} icon`}
                     loading="lazy"
-                    className="h-[70%] w-full object-contain transition-transform duration-500 group-hover:scale-110"
+                    className="h-[55%] w-full object-contain transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
 
                 <div className="padding-x w-full">
-                  <p className="text-lg whitespace-nowrap">{name}</p>
+                  <p className="text-xl whitespace-nowrap uppercase italic font-light">{name}</p>
                 </div>
               </div>
             </div>

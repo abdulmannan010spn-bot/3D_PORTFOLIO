@@ -16,6 +16,9 @@ const Testimonial = () => {
             imageFit="cover"
           />
         </div>
+        <div className="text-xl font-light text-center px-45 italic relative bottom-25 tracking-wide">
+          <h1>My journey in Team OSS at AKGEC has been a transformation from a creative designer to a frontend developer. I started by designing posters, logos, and event creatives, then explored UI/UX through Figma and designathons. Over time, I shifted toward web development, learning React, Tailwind, GSAP, and Three.js while building real-world projects.</h1>
+        </div>
       </div>
     </section>
   );

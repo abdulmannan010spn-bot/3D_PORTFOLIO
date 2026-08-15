@@ -171,34 +171,40 @@ const techStackIcons = [
 
 const expCards = [
   {
-    review:
-      "Abdul has been actively involved in building creative digital experiences and contributing to technical projects through the Open Source Software and Research & Development Centre.",
+    mission:
+      "My mission is to learn, collaborate, and contribute through open-source projects while continuously improving my development, design, and problem-solving skills. By participating in technical communities, I aim to gain practical experience, share knowledge, and create meaningful solutions that positively impact others.",
+
     imgPath: "/images/exp1.png",
     logoPath: "/images/oss.png",
     title: "Open Source & R&D Centre",
     date: "2025 - Present",
+
     responsibilities: [
       "Contributing to technical and open-source initiatives as a member of OSSR&DC at AKGEC.",
-      "Working on frontend development, UI/UX design and creative digital projects.",
-      "Collaborating with other students to organize technical events, workshops and recruitment activities.",
+      "Working on frontend development, UI/UX design, and creative digital projects.",
+      "Collaborating with other students to organize technical events, workshops, and recruitment activities.",
     ],
   },
+
   {
-    review:
-      "Abdul combines frontend development with strong visual design skills, creating interfaces that are both functional and visually engaging.",
+    mission:
+      "My mission is to develop modern, responsive, and visually engaging web applications that combine creativity with functionality. I focus on building intuitive user experiences while continuously exploring new technologies, improving my frontend skills, and creating digital products that are both efficient and user-centered.",
+
     imgPath: "/images/exp2.png",
     logoPath: "/images/react.png",
     title: "Frontend & Creative Developer",
     date: "2025 - Present",
+
     responsibilities: [
-      "Building responsive websites and portfolio experiences using React, JavaScript and Tailwind CSS.",
+      "Building responsive websites and portfolio experiences using React, JavaScript, and Tailwind CSS.",
       "Creating animations and interactive experiences using GSAP and React Three Fiber.",
       "Designing interfaces and visual assets using Figma and other creative tools.",
     ],
   },
+
   {
-    review:
-      "Abdul is passionate about combining GSAP and Three.js to build immersive, interactive, and visually engaging web experiences.",
+    mission:
+      "My mission is to create immersive and interactive 3D web experiences by combining animation, design, and modern development techniques. I enjoy transforming creative ideas into dynamic digital environments while exploring Three.js, React Three Fiber, and advanced animation tools to deliver memorable user experiences.",
 
     imgPath: "/images/exp3.png",
     logoPath: "/images/gsap.png",
@@ -276,22 +282,22 @@ const testimonials = [
 const socialImgs = [
   {
     name: "insta",
-    url: "https://www.instagram.com/",
+    url: "https://www.instagram.com/mai_mannan_hoon?igsh=czk2enp3cWpkazFl&igsi=czk2enp3cWpkazFl",
     imgPath: "/images/insta.png",
   },
   {
-    name: "fb",
-    url: "https://www.facebook.com/",
-    imgPath: "/images/fb.png",
+    name: "GitHub",
+    url: "https://github.com/abdulmannan010spn-bot",
+    imgPath: "/images/git.png",
   },
   {
-    name: "x",
-    url: "https://www.x.com/",
-    imgPath: "/images/x.png",
+    name: "Leetcode",
+    url: "https://leetcode.com/u/MAI_MANNAN_HOON_10/",
+    imgPath: "/images/leet.png",
   },
   {
     name: "linkedin",
-    url: "https://www.linkedin.com/",
+    url: "www.linkedin.com/in/abdul-mannan-537494375",
     imgPath: "/images/linkedin.png",
   },
 ];

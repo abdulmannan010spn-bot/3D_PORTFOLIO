@@ -37,7 +37,7 @@ const Contact = () => {
 
                 <div>
                   <label htmlFor="message">Your Message</label>
-                  <textarea
+                  <textarea className="resize-none"
                     id="message"
                     name="message"
                     placeholder="How can I help you?"
