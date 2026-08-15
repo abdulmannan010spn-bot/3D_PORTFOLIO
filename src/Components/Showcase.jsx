@@ -37,7 +37,7 @@ const Showcase = () => {
           duration: 1.1,
           ease: "expo.out",
         },
-        "-=0.7", // overlap with the section fade so it doesn't feel like a separate beat
+        "-=0.8", // overlap with the section fade so it doesn't feel like a separate beat
       )
       .from(
         [project2Ref.current, project3Ref.current],
@@ -48,7 +48,7 @@ const Showcase = () => {
           ease: "expo.out",
           stagger: 0.2,
         },
-        "-=0.6", // overlap with project1 for a continuous cascade instead of three discrete pops
+        "-=0.8", // overlap with project1 for a continuous cascade instead of three discrete pops
       );
   }, []);
 
@@ -59,7 +59,7 @@ const Showcase = () => {
           <div className="first-project-wrapper">
             <div
               ref={project1Ref}
-              className="image-wrapper bg-[#E1E1F7] rounded-xl will-change-transform"
+              className="image-wrapper bg-[linear-gradient(to_bottom,#ede7ff_0%,#f5f1ff_40%,#ffffff_100%)] rounded-xl will-change-transform"
             >
               <img
                 className="h-full w-full object-contain"
