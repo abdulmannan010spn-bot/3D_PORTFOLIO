@@ -2,6 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useRef } from "react";
+import Button from "./Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,7 +37,7 @@ const Showcase = () => {
           duration: 1.1,
           ease: "expo.out",
         },
-        "-=0.7" // overlap with the section fade so it doesn't feel like a separate beat
+        "-=0.7", // overlap with the section fade so it doesn't feel like a separate beat
       )
       .from(
         [project2Ref.current, project3Ref.current],
@@ -47,7 +48,7 @@ const Showcase = () => {
           ease: "expo.out",
           stagger: 0.2,
         },
-        "-=0.6" // overlap with project1 for a continuous cascade instead of three discrete pops
+        "-=0.6", // overlap with project1 for a continuous cascade instead of three discrete pops
       );
   }, []);
 
@@ -58,11 +59,11 @@ const Showcase = () => {
           <div className="first-project-wrapper">
             <div
               ref={project1Ref}
-              className="image-wrapper bg-[#D5DFF8] rounded-xl will-change-transform"
+              className="image-wrapper bg-[#E1E1F7] rounded-xl will-change-transform"
             >
               <img
                 className="h-full w-full object-contain"
-                src="/images/pokemonpro.jpeg"
+                src="/images/first.png"
                 alt="Pokémon Explorer Project"
               />
             </div>
@@ -77,6 +78,9 @@ const Showcase = () => {
                 PokeAPI, featuring dynamic data fetching, reusable components,
                 and an interactive user experience.
               </p>
+              <a href="https://github.com/abdulmannan010spn-bot">
+                <Button className="md:w-80 md:h-16 w-60 h-12" text="See More" />
+              </a>
             </div>
           </div>
 
@@ -87,8 +91,8 @@ const Showcase = () => {
                 className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
               >
                 <img
-                  className="h-full w-full object-cover"
-                  src="/images/sona.png"
+                  className="h-full w-full object-contain"
+                  src="/images/second.png"
                   alt="Sonata Watch Website"
                 />
               </div>
@@ -105,14 +109,15 @@ const Showcase = () => {
                 className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
               >
                 <img
-                  className="h-full w-full object-cover"
-                  src="/images/app.png"
+                  className="h-full w-full object-contain"
+                  src="/images/third.png"
                   alt="3D Developer Portfolio"
                 />
               </div>
 
               <h2>
-                Apple — An Immersive Product Experience Built with React & Three.js
+                Apple — An Immersive Product Experience Built with React &
+                Three.js
               </h2>
             </div>
           </div>

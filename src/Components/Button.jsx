@@ -1,4 +1,4 @@
-const Button = ({ className, text, id }) => {
+const Button = ({ className, text, id, }) => {
   return (
     <a key={id}>
          <div className={`${className ?? ''} cta-wrapper`}>
