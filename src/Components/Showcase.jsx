@@ -37,7 +37,7 @@ const Showcase = () => {
           duration: 1.1,
           ease: "expo.out",
         },
-        "-=0.8", // overlap with the section fade so it doesn't feel like a separate beat
+        "-=0.8",
       )
       .from(
         [project2Ref.current, project3Ref.current],
@@ -48,7 +48,7 @@ const Showcase = () => {
           ease: "expo.out",
           stagger: 0.2,
         },
-        "-=0.8", // overlap with project1 for a continuous cascade instead of three discrete pops
+        "-=0.8",
       );
   }, []);
 
@@ -57,28 +57,43 @@ const Showcase = () => {
       <div className="w-full">
         <div className="showcaselayout">
           <div className="first-project-wrapper">
-            <div
-              ref={project1Ref}
-              className="image-wrapper bg-[linear-gradient(to_bottom,#ede7ff_0%,#f5f1ff_40%,#ffffff_100%)] rounded-xl will-change-transform"
+            <a
+              href="https://pokedex-three-opal.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
             >
-              <img
-                className="h-full w-full object-contain"
-                src="/images/first.png"
-                alt="Pokémon Explorer Project"
-              />
-            </div>
+              <div
+                ref={project1Ref}
+                className="image-wrapper bg-[linear-gradient(to_bottom,#ede7ff_0%,#f5f1ff_40%,#ffffff_100%)] rounded-xl will-change-transform"
+              >
+                <img
+                  className="h-full w-full object-contain"
+                  src="/images/first.png"
+                  alt="Pokémon Explorer Project"
+                />
+              </div>
+
+              <div className="text-content">
+                <h2>
+                  Explore the World of Pokémon with a Fast and Interactive Web
+                  App
+                </h2>
+              </div>
+            </a>
 
             <div className="text-content">
-              <h2>
-                Explore the World of Pokémon with a Fast and Interactive Web App
-              </h2>
-
               <p className="text-white-50 md:text-xl">
                 A responsive Pokémon explorer built with React, Axios, and
                 PokeAPI, featuring dynamic data fetching, reusable components,
                 and an interactive user experience.
               </p>
-              <a href="https://github.com/abdulmannan010spn-bot">
+
+              <a
+                href="https://github.com/abdulmannan010spn-bot"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button className="md:w-80 md:h-16 w-60 h-12" text="See More" />
               </a>
             </div>
@@ -86,39 +101,53 @@ const Showcase = () => {
 
           <div className="project-list-wrapper overflow-hidden">
             <div className="project2">
-              <div
-                ref={project2Ref}
-                className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
+              <a
+                href="https://sonata-eta.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                <img
-                  className="h-full w-full object-contain"
-                  src="/images/second.png"
-                  alt="Sonata Watch Website"
-                />
-              </div>
+                <div
+                  ref={project2Ref}
+                  className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
+                >
+                  <img
+                    className="h-full w-full object-contain"
+                    src="/images/second.png"
+                    alt="Sonata Watch Website"
+                  />
+                </div>
 
-              <h2>
-                Sonata — A Premium Watch Experience Crafted for the Modern
-                Lifestyle
-              </h2>
+                <h2>
+                  Sonata — A Premium Watch Experience Crafted for the Modern
+                  Lifestyle
+                </h2>
+              </a>
             </div>
 
             <div className="project3">
-              <div
-                ref={project3Ref}
-                className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
+              <a
+                href="https://apple-theta-ochre.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                <img
-                  className="h-full w-full object-contain"
-                  src="/images/third.png"
-                  alt="3D Developer Portfolio"
-                />
-              </div>
+                <div
+                  ref={project3Ref}
+                  className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
+                >
+                  <img
+                    className="h-full w-full object-contain"
+                    src="/images/third.png"
+                    alt="Apple 3D Product Experience"
+                  />
+                </div>
 
-              <h2>
-                Apple — An Immersive Product Experience Built with React &
-                Three.js
-              </h2>
+                <h2>
+                  Apple — An Immersive Product Experience Built with React &
+                  Three.js
+                </h2>
+              </a>
             </div>
           </div>
         </div>
