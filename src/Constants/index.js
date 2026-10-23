@@ -271,7 +271,7 @@ const showcaseProjects = [
     image: "/images/fourth.png",
     bg: "bg-black",
     tags: ["React", "Zustand"],
-    live: "https://macfolio-phi.vercel.app/",
+    live: "https://macfolio-psi.vercel.app/",
     github: "https://github.com/abdulmannan010spn-bot",
   },
   {
