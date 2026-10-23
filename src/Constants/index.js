@@ -234,6 +234,57 @@ const expLogos = [
   },
 ];
 
+const showcaseProjects = [
+  {
+    title: "Pokémon Explorer",
+    description:
+      "A fast, responsive Pokémon explorer built with React, Axios and PokeAPI, with dynamic data fetching, reusable components and a smooth browsing experience.",
+    image: "/images/first.png",
+    bg: "bg-[linear-gradient(to_bottom,#ede7ff_0%,#f5f1ff_40%,#ffffff_100%)]",
+    tags: ["React", "Axios", "PokeAPI", "Tailwind CSS"],
+    live: "https://pokedex-three-opal.vercel.app/",
+    github: "https://github.com/abdulmannan010spn-bot",
+  },
+  {
+    title: "Sonata",
+    description:
+      "A premium watch website crafted for the modern lifestyle, with clean product storytelling and polished motion.",
+    image: "/images/second.png",
+    bg: "bg-black",
+    tags: ["React", "Tailwind CSS", "GSAP"],
+    live: "https://sonata-eta.vercel.app/",
+    github: "https://github.com/abdulmannan010spn-bot",
+  },
+  {
+    title: "Apple 3D Experience",
+    description:
+      "An immersive Apple-style product page built with React and Three.js, where the 3D model reacts to scroll and interaction.",
+    image: "/images/third.png",
+    bg: "bg-black",
+    tags: ["React", "Three.js", "GSAP"],
+    live: "https://apple-theta-ochre.vercel.app/",
+    github: "https://github.com/abdulmannan010spn-bot",
+  },
+{
+    title: "Macfolio",
+    description: "An interactive, macOS-themed portfolio featuring draggable windows and system directories to showcase projects.",
+    image: "/images/fourth.png",
+    bg: "bg-black",
+    tags: ["React", "Zustand"],
+    live: "https://macfolio-phi.vercel.app/",
+    github: "https://github.com/abdulmannan010spn-bot",
+  },
+  {
+    title: "Technical Society",
+    description: "The official digital platform for Team OSS, highlighting open-source initiatives, member profiles, and alumni networks.",
+    image: "/images/fifth.png",
+    bg: "bg-black",
+    tags: ["React", "React Bits", "21 Dev"],
+    live: "https://github.com/abdulmannan010spn-bot",
+    github: "https://github.com/abdulmannan010spn-bot",
+  },
+];
+
 const testimonials = [
   {
     name: "OSS Team",
@@ -318,4 +369,5 @@ export {
   techStackIcons,
   techStackImgs,
   navLinks,
+  showcaseProjects,
 };

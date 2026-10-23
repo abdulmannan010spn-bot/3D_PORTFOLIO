@@ -2,157 +2,134 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useRef } from "react";
-import Button from "./Button";
+import { showcaseProjects as projects } from "../Constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Showcase = () => {
-  const showcaseRef = useRef(null);
-  const project1Ref = useRef(null);
-  const project2Ref = useRef(null);
-  const project3Ref = useRef(null);
+const focusRing =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black";
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: showcaseRef.current,
-        start: "top 75%",
-        toggleActions: "play none none reverse",
-      },
-      defaults: {
-        ease: "power3.out",
-      },
-    });
-
-    tl.from(showcaseRef.current, {
-      opacity: 0,
-      y: 40,
-      duration: 1.1,
-    })
-      .from(
-        project1Ref.current,
-        {
-          opacity: 0,
-          x: -50,
-          duration: 1.1,
-          ease: "expo.out",
-        },
-        "-=0.8",
-      )
-      .from(
-        [project2Ref.current, project3Ref.current],
-        {
-          opacity: 0,
-          y: 50,
-          duration: 1,
-          ease: "expo.out",
-          stagger: 0.2,
-        },
-        "-=0.8",
-      );
-  }, []);
+const ProjectCard = ({ project, featured = false }) => {
+  const { title, description, image, bg, tags, live, github } = project;
 
   return (
-    <div id="work" className="app-showcase" ref={showcaseRef}>
-      <div className="w-full">
-        <div className="showcaselayout">
-          <div className="first-project-wrapper">
+    <article
+      className={`project-card group overflow-hidden rounded-2xl border border-[#27272A] bg-[#0c0c0e] transition-colors duration-300 hover:border-[#52525B] ${
+        featured ? "grid lg:grid-cols-2" : "flex flex-col"
+      }`}
+    >
+      <a
+        href={live}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${title} live demo`}
+        className={`block overflow-hidden ${bg} ${focusRing}`}
+      >
+        <div
+          className={`w-full ${
+            featured ? "h-full min-h-72" : "aspect-16/10"
+          }`}
+        >
+          <img
+            src={image}
+            alt={`${title} preview`}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+          />
+        </div>
+      </a>
+
+      <div
+        className={`flex flex-col gap-5 p-6 ${
+          featured ? "md:p-10 lg:justify-center" : "md:p-8 flex-1"
+        }`}
+      >
+        <h3
+          className={`font-semibold leading-tight ${
+            featured ? "text-3xl md:text-4xl" : "text-2xl"
+          }`}
+        >
+          {title}
+        </h3>
+
+        <p className="text-white-50 md:text-lg max-w-prose">{description}</p>
+
+        <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
+          {tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full border border-[#27272A] bg-[#18181B] px-3 py-1 text-sm text-white-50"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto flex flex-wrap gap-3 pt-2">
+          <a
+            href={live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`rounded-lg bg-white px-5 py-2.5 text-black transition-opacity hover:opacity-85 ${focusRing}`}
+          >
+            View live site
+          </a>
+
+          {github && (
             <a
-              href="https://pokedex-three-opal.vercel.app/"
+              href={github}
               target="_blank"
               rel="noopener noreferrer"
-              className="block"
+              className={`rounded-lg border border-[#3F3F46] px-5 py-2.5 transition-colors hover:bg-[#18181B] ${focusRing}`}
             >
-              <div
-                ref={project1Ref}
-                className="image-wrapper bg-[linear-gradient(to_bottom,#ede7ff_0%,#f5f1ff_40%,#ffffff_100%)] rounded-xl will-change-transform"
-              >
-                <img
-                  className="h-full w-full object-contain"
-                  src="/images/first.png"
-                  alt="Pokémon Explorer Project"
-                />
-              </div>
-
-              <div className="text-content">
-                <h2>
-                  Explore the World of Pokémon with a Fast and Interactive Web
-                  App
-                </h2>
-              </div>
+              View code
             </a>
-
-            <div className="text-content">
-              <p className="text-white-50 md:text-xl">
-                A responsive Pokémon explorer built with React, Axios, and
-                PokeAPI, featuring dynamic data fetching, reusable components,
-                and an interactive user experience.
-              </p>
-
-              <a
-                href="https://github.com/abdulmannan010spn-bot"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="md:w-80 md:h-16 w-60 h-12" text="See More" />
-              </a>
-            </div>
-          </div>
-
-          <div className="project-list-wrapper overflow-hidden">
-            <div className="project2">
-              <a
-                href="https://sonata-eta.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <div
-                  ref={project2Ref}
-                  className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
-                >
-                  <img
-                    className="h-full w-full object-contain"
-                    src="/images/second.png"
-                    alt="Sonata Watch Website"
-                  />
-                </div>
-
-                <h2>
-                  Sonata — A Premium Watch Experience Crafted for the Modern
-                  Lifestyle
-                </h2>
-              </a>
-            </div>
-
-            <div className="project3">
-              <a
-                href="https://apple-theta-ochre.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <div
-                  ref={project3Ref}
-                  className="image-wrapper bg-black border-2 border-[#18181B] will-change-transform"
-                >
-                  <img
-                    className="h-full w-full object-contain"
-                    src="/images/third.png"
-                    alt="Apple 3D Product Experience"
-                  />
-                </div>
-
-                <h2>
-                  Apple — An Immersive Product Experience Built with React &
-                  Three.js
-                </h2>
-              </a>
-            </div>
-          </div>
+          )}
         </div>
       </div>
-    </div>
+    </article>
+  );
+};
+
+const Showcase = () => {
+  const sectionRef = useRef(null);
+  const [featured, ...rest] = projects;
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.utils.toArray(".project-card").forEach((card) => {
+          gsap.from(card, {
+            opacity: 0,
+            y: 48,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 88%",
+              once: true,
+            },
+          });
+        });
+      });
+    },
+    { scope: sectionRef },
+  );
+
+  return (
+    <section id="work" className="app-showcase" ref={sectionRef}>
+      <div className="w-full flex flex-col gap-8">
+        <ProjectCard project={featured} featured />
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {rest.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
