@@ -5,12 +5,14 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      <div className="footer-container">
-        <div className="flex flex-col justify-center">
+     
+      <div className="footer-container flex flex-wrap justify-between items-center gap-6 p-4">
+        
+        <div className="flex flex-col justify-center w-full md:w-auto text-center md:text-left">
           <p>Terms & Conditions</p>
         </div>
 
-        <div className="socials">
+        <div className="socials flex justify-center w-full md:w-auto gap-4">
           {socialImgs.map(({ name, url, icon: Icon }) => (
             <div key={name} className="icon">
               <a
@@ -26,17 +28,19 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="flex flex-col justify-center items-center md:items-end gap-2">
+       
+        <div className="flex flex-col justify-center items-center lg:items-end gap-2 w-full lg:w-auto">
           <a
             href={`mailto:${email}?subject=${encodeURIComponent(
               "Contact from your Portfolio"
             )}`}
-            className="text-center md:text-end hover:underline"
+        
+            className="text-center lg:text-end hover:underline break-all px-2"
           >
             Contact Me : {email}
           </a>
 
-          <p className="text-center md:text-end">
+          <p className="text-center lg:text-end text-sm">
             © {new Date().getFullYear()} Abdul Mannan. All rights reserved.
           </p>
         </div>

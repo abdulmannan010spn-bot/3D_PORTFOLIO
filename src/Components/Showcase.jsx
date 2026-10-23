@@ -123,7 +123,7 @@ const Showcase = () => {
       <div className="w-full flex flex-col gap-8">
         <ProjectCard project={featured} featured />
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {rest.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
