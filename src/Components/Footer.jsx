@@ -7,18 +7,26 @@ const Footer = () => {
         <div className="flex flex-col justify-center">
           <p>Terms & Conditions</p>
         </div>
+
         <div className="socials">
-          {socialImgs.map((socialImg, index) => (
-            <div key={index} className="icon">
-              <a href={socialImg.url}>
-              <img src={socialImg.imgPath} alt="social icon" />
+          {socialImgs.map(({ name, url, icon: Icon }) => (
+            <div key={name} className="icon">
+              <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={name}
+                className="flex items-center justify-center w-full h-full"
+              >
+                <Icon size={24} color="white" />
               </a>
             </div>
           ))}
         </div>
+
         <div className="flex flex-col justify-center">
           <p className="text-center md:text-end">
-            © {new Date().getFullYear()}Abdul Mannan. All rights reserved.
+            © {new Date().getFullYear()} Abdul Mannan. All rights reserved.
           </p>
         </div>
       </div>

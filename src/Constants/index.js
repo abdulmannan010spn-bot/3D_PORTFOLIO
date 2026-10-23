@@ -279,28 +279,32 @@ const testimonials = [
   },
 ];
 
-const socialImgs = [
-  {
-    name: "insta",
-    url: "https://www.instagram.com/mai_mannan_hoon?igsh=czk2enp3cWpkazFl&igsi=czk2enp3cWpkazFl",
-    imgPath: "/images/insta.png",
-  },
-  {
-    name: "GitHub",
-    url: "https://github.com/abdulmannan010spn-bot",
-    imgPath: "/images/git.png",
-  },
-  {
-    name: "Leetcode",
-    url: "https://leetcode.com/u/MAI_MANNAN_HOON_10/",
-    imgPath: "/images/leet.png",
-  },
-  {
-    name: "linkedin",
-    url: "www.linkedin.com/in/abdul-mannan-537494375",
-    imgPath: "/images/linkedin.png",
-  },
-];
+   import { SiGeeksforgeeks, SiGithub, SiLeetcode } from "react-icons/si";
+   import { FaLinkedinIn } from "react-icons/fa6";
+
+   const socialImgs = [
+     {
+       name: "geeksforgeeks",
+       url: "https://www.geeksforgeeks.org/profile/abdulmann4nd4?tab=activity",
+       icon: SiGeeksforgeeks,
+     },
+     {
+       name: "GitHub",
+       url: "https://github.com/abdulmannan010spn-bot",
+       icon: SiGithub,
+     },
+     {
+       name: "Leetcode",
+       url: "https://leetcode.com/u/MAI_MANNAN_HOON_10/",
+       icon: SiLeetcode,
+     },
+     {
+       name: "linkedin",
+       url: "https://www.linkedin.com/in/abdul-mannan-537494375",
+       icon: FaLinkedinIn,
+     },
+   ];
+
 
 export {
   words,
